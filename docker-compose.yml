@@ -1,0 +1,30 @@
+version: '3'
+services:
+    auto_mysql:
+        image: mysql:8.0
+        container_name: "trade_mysql"
+        ports:
+            - 33060:3306
+        expose:
+            - '3306'
+        environment: 
+            MYSQL_USER: "trademysql"
+            MYSQL_PASSWORD: "trade--mysql"
+            MYSQL_ROOT_PASSWORD: "trade-123458"
+        volumes:
+            - ./mysql/data:/var/lib/mysql
+            - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    front_end:
+        build: ./frontend
+        container_name: "trade_frontend"
+        ports:
+            - 4200:4200
+        volumes:
+            - ./frontend:/opt
+    back_end:
+        build: ./backend
+        container_name: "trade_backend"
+        ports:
+            - 3000:3000
+        volumes:
+            - ./backend:/opt
